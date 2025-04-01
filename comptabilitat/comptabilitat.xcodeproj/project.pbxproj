@@ -102,7 +102,8 @@
 				31D65E212D99FE6F007F76CF /* Sources */,
 				31D65E222D99FE6F007F76CF /* Frameworks */,
 				31D65E232D99FE6F007F76CF /* Resources */,
-				31D65E522D99FF93007F76CF /* swiftlint swiftformat */,
+				31D65E522D99FF93007F76CF /* swiftlint */,
+				313D510E2D9CA317006B88CB /* swiftformat */,
 			);
 			buildRules = (
 			);
@@ -233,23 +234,43 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		31D65E522D99FF93007F76CF /* swiftlint swiftformat */ = {
+		313D510E2D9CA317006B88CB /* swiftformat */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
 			);
 			inputPaths = (
 			);
-			name = "swiftlint swiftformat";
+			name = swiftformat;
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n# 检查并运行 SwiftLint\necho \"Checking SwiftLint...\"\nif /usr/local/bin/swiftlint --version >/dev/null 2>&1; then\n    echo \"Running swiftlint --fix\"\n    /usr/local/bin/swiftlint --fix --path .\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n\n# 检查并运行 SwiftFormat\necho \"Checking SwiftFormat...\"\nif /usr/local/bin/swiftformat --version >/dev/null 2>&1; then\n    echo \"Running swiftformat\"\n    /usr/local/bin/swiftformat .\nelse\n    echo \"warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat\"\nfi\n";
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftformat > /dev/null; then\n  swiftformat .\nelse\n  echo \"warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat\"\nfi\n";
+		};
+		31D65E522D99FF93007F76CF /* swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = swiftlint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = "/bin/sh\n/bin/bash\n/bin/bash\n/bin/bash\n/bin/bash";
+			shellScript = "\nexport PATH=\"$PATH:/opt/homebrew/bin\"\n\npwd\n\nls -al\n\npwd\n\necho \"Checking SwiftLint...\"\nif which swiftlint >/dev/null; then\n    echo \"Running swiftlint --fix\"\n    swiftlint --fix\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -328,7 +349,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -391,7 +412,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
